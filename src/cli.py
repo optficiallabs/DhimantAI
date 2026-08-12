@@ -9,6 +9,7 @@ from pathlib import Path
 from .access_control import evaluate_access
 from .benchmark_runner import calculate_metrics, expected_decision_evaluator, load_jsonl, run_benchmark
 from .content_security import scan_learning_content
+from .integrated_evaluator import evaluate_case
 
 
 def _read_text(path: str) -> str:
@@ -29,6 +30,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     benchmark = subparsers.add_parser("run-benchmark", help="Run benchmark plumbing and report reproducible metrics")
     benchmark.add_argument("path")
+
+    integrated = subparsers.add_parser("run-integrated-benchmark", help="Evaluate structured benchmark cases through DhimantAI reference modules")
+    integrated.add_argument("path")
+    integrated.add_argument("--include-results", action="store_true")
 
     return parser
 
@@ -55,6 +60,15 @@ def main(argv: list[str] | None = None) -> int:
         results = run_benchmark(cases, expected_decision_evaluator)
         print(json.dumps(calculate_metrics(results), indent=2, sort_keys=True))
         return 0
+
+    if args.command == "run-integrated-benchmark":
+        cases = load_jsonl(args.path)
+        results = run_benchmark(cases, evaluate_case)
+        output = {"metrics": calculate_metrics(results)}
+        if args.include_results:
+            output["results"] = results
+        print(json.dumps(output, indent=2, sort_keys=True))
+        return 0 if output["metrics"]["incorrect"] == 0 else 1
 
     return 2
 
