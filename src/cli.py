@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from .access_control import evaluate_access
+from .benchmark_reporting import build_report, write_report_files
 from .benchmark_runner import calculate_metrics, expected_decision_evaluator, load_jsonl, run_benchmark
 from .content_security import scan_learning_content
 from .integrated_evaluator import evaluate_case
@@ -34,6 +35,11 @@ def build_parser() -> argparse.ArgumentParser:
     integrated = subparsers.add_parser("run-integrated-benchmark", help="Evaluate structured benchmark cases through DhimantAI reference modules")
     integrated.add_argument("path")
     integrated.add_argument("--include-results", action="store_true")
+
+    report = subparsers.add_parser("generate-benchmark-report", help="Run the integrated benchmark and write JSON/Markdown reports")
+    report.add_argument("path")
+    report.add_argument("--output-dir", default="artifacts/benchmark")
+    report.add_argument("--stem", default="benchmark-report")
 
     return parser
 
@@ -69,6 +75,14 @@ def main(argv: list[str] | None = None) -> int:
             output["results"] = results
         print(json.dumps(output, indent=2, sort_keys=True))
         return 0 if output["metrics"]["incorrect"] == 0 else 1
+
+    if args.command == "generate-benchmark-report":
+        cases = load_jsonl(args.path)
+        results = run_benchmark(cases, evaluate_case)
+        report = build_report(results)
+        paths = write_report_files(report, args.output_dir, args.stem)
+        print(json.dumps({"paths": paths, "metrics": report["metrics"]}, indent=2, sort_keys=True))
+        return 0 if report["metrics"]["incorrect"] == 0 else 1
 
     return 2
 

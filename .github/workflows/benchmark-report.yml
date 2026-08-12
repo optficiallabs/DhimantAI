@@ -1,0 +1,32 @@
+name: Benchmark Report
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate integrated benchmark report
+        run: >-
+          python -m src.cli generate-benchmark-report
+          benchmarks/education_cybersecurity_cases.jsonl
+          --output-dir artifacts/benchmark
+          --stem education-cybersecurity
+      - name: Upload benchmark report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dhimantai-benchmark-report
+          path: artifacts/benchmark/
+          if-no-files-found: error

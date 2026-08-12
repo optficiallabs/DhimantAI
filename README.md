@@ -29,7 +29,7 @@ DhimantAI is intended to support educators and learners. It does not replace tea
 
 ## Open-Source Structure
 
-The project includes reusable components for content validation, access control, assessment-integrity checks, secure logging, benchmark scenarios, integrated benchmark evaluation, metrics, tests, and developer workflows.
+The project includes reusable components for content validation, access control, assessment-integrity checks, secure logging, benchmark scenarios, integrated benchmark evaluation, benchmark reporting, metrics, tests, and developer workflows.
 
 ## Getting Started
 
@@ -85,6 +85,14 @@ Include per-case evaluation traces:
 ```bash
 dhimantai run-integrated-benchmark benchmarks/education_cybersecurity_cases.jsonl --include-results
 ```
+
+Generate machine-readable JSON and human-readable Markdown benchmark reports:
+
+```bash
+dhimantai generate-benchmark-report benchmarks/education_cybersecurity_cases.jsonl --output-dir artifacts/benchmark
+```
+
+Reports include overall metrics, per-category accuracy, expected-vs-actual decision matrices, per-case evaluation traces, and failed-case diagnostics. The `Benchmark Report` GitHub Actions workflow generates these files and uploads them as a CI artifact for pull-request review.
 
 The integrated evaluator routes structured cases to content security, assessment integrity, access control, privacy redaction, or explicit workflow-policy evaluation. Unsupported evaluator types fail closed to human review.
 
