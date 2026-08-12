@@ -29,7 +29,7 @@ DhimantAI is intended to support educators and learners. It does not replace tea
 
 ## Open-Source Structure
 
-The project includes reusable components for content validation, access control, assessment-integrity checks, secure logging, benchmark scenarios, benchmark metrics, tests, and developer workflows.
+The project includes reusable components for content validation, access control, assessment-integrity checks, secure logging, benchmark scenarios, integrated benchmark evaluation, metrics, tests, and developer workflows.
 
 ## Getting Started
 
@@ -68,13 +68,25 @@ Evaluate a role/action/scope request:
 dhimantai check-access student view_own_progress --scope self
 ```
 
-Run the benchmark plumbing and report overall/per-category metrics:
+Run the benchmark plumbing with the expected-decision reference evaluator:
 
 ```bash
 dhimantai run-benchmark benchmarks/education_cybersecurity_cases.jsonl
 ```
 
-The benchmark command currently uses a reference evaluator to verify loading, execution, and metric calculation. Future releases can plug in additional defensive evaluators without changing the benchmark format.
+Run structured cases through the real DhimantAI reference modules and report metrics:
+
+```bash
+dhimantai run-integrated-benchmark benchmarks/education_cybersecurity_cases.jsonl
+```
+
+Include per-case evaluation traces:
+
+```bash
+dhimantai run-integrated-benchmark benchmarks/education_cybersecurity_cases.jsonl --include-results
+```
+
+The integrated evaluator routes structured cases to content security, assessment integrity, access control, privacy redaction, or explicit workflow-policy evaluation. Unsupported evaluator types fail closed to human review.
 
 ## Contributing
 
