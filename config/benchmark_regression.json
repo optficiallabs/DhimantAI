@@ -1,0 +1,7 @@
+{
+  "baseline": "benchmarks/baselines/education_cybersecurity_v0.3.0.json",
+  "maximum_accuracy_drop": 0.0,
+  "maximum_category_drop": 0.0,
+  "fail_on_new_case_failure": true,
+  "fail_on_missing_baseline_case": true
+}
