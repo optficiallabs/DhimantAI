@@ -1,0 +1,9 @@
+{
+  "minimum_accuracy": 1.0,
+  "category_minimums": {
+    "manipulated_content": 1.0,
+    "assessment_misuse": 1.0,
+    "role_violation": 1.0,
+    "student_data_exposure": 1.0
+  }
+}
