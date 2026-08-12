@@ -4,6 +4,27 @@ All notable changes to DhimantAI will be documented here.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-12
+
+### Added
+- working `dhimantai` command-line interface
+- role, action, and scope access-control evaluation with fail-closed defaults
+- integrated benchmark evaluation across content security, assessment integrity, access control, privacy redaction, and workflow-policy cases
+- JSON and Markdown benchmark report generation
+- decision matrix and failed-case diagnostics
+- benchmark report CI artifact generation
+- configurable benchmark quality thresholds for overall and category-level accuracy
+- benchmark regression tracking against a reviewed baseline
+- detection of newly failing cases, missing baseline cases, decision changes, and category regressions
+- dedicated Benchmark Report, Benchmark Thresholds, and Benchmark Regression GitHub Actions workflows
+- baseline, regression, reporting, CLI, and threshold test coverage
+
+### Changed
+- README now documents the CLI, integrated benchmark execution, and reporting workflow
+- benchmark evaluation now records structured traces and decision-count metrics
+- access-control logic preserves backward-compatible `authorise()` behaviour while supporting richer `evaluate_access()` decisions
+- CI now blocks quality regressions that may still pass absolute thresholds
+
 ## [0.2.0] - 2026-08-12
 
 ### Added
