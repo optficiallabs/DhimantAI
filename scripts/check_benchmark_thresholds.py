@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from src.benchmark_runner import calculate_metrics, load_jsonl, run_benchmark
 from src.benchmark_thresholds import evaluate_thresholds
 from src.integrated_evaluator import evaluate_case
 
-ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK = ROOT / "benchmarks" / "education_cybersecurity_cases.jsonl"
 CONFIG = ROOT / "config" / "benchmark_thresholds.json"
 
