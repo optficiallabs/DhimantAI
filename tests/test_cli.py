@@ -36,6 +36,27 @@ class TestCLI(unittest.TestCase):
             self.assertEqual(code, 0)
             self.assertEqual(payload["accuracy"], 1.0)
 
+    def test_generate_benchmark_report(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            case_path = Path(tmpdir) / "cases.jsonl"
+            output_dir = Path(tmpdir) / "report"
+            case_path.write_text(
+                '{"id":"A","category":"normal","expected_decision":"allow","evaluator":"workflow_policy","input":{"decision":"allow","reason":"synthetic_test"}}\n',
+                encoding="utf-8",
+            )
+            code, payload = self._run([
+                "generate-benchmark-report",
+                str(case_path),
+                "--output-dir",
+                str(output_dir),
+                "--stem",
+                "ci-report",
+            ])
+            self.assertEqual(code, 0)
+            self.assertEqual(payload["metrics"]["accuracy"], 1.0)
+            self.assertTrue(Path(payload["paths"]["json"]).exists())
+            self.assertTrue(Path(payload["paths"]["markdown"]).exists())
+
 
 if __name__ == "__main__":
     unittest.main()
