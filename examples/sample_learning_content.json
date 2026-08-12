@@ -1,0 +1,10 @@
+{
+  "example_id": "SYN-EDU-001",
+  "institution": "Synthetic Learning Institute",
+  "subject": "Mathematics",
+  "topic": "Quadratic Equations",
+  "learning_mode": "guided_practice",
+  "student_request": "Help me understand when to use the quadratic formula.",
+  "content": "Use the coefficients from ax^2 + bx + c = 0 and first identify a, b, and c.",
+  "data_classification": "synthetic"
+}
