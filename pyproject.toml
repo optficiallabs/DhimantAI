@@ -11,5 +11,8 @@ requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
 authors = [{name = "Optficial Labs Pvt Ltd."}]
 
+[project.scripts]
+dhimantai = "src.cli:main"
+
 [tool.setuptools]
 packages = ["src"]

@@ -29,7 +29,7 @@ DhimantAI is intended to support educators and learners. It does not replace tea
 
 ## Open-Source Structure
 
-The project includes reusable components for content validation, access control, assessment-integrity checks, secure logging, benchmark scenarios, tests, and developer workflows.
+The project includes reusable components for content validation, access control, assessment-integrity checks, secure logging, benchmark scenarios, benchmark metrics, tests, and developer workflows.
 
 ## Getting Started
 
@@ -52,11 +52,29 @@ Run tests:
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
-## Planned CLI
+## CLI
+
+After installation, the `dhimantai` command provides public-safe reference utilities.
+
+Scan learning content:
 
 ```bash
 dhimantai validate-content examples/sample_learning_content.json
 ```
+
+Evaluate a role/action/scope request:
+
+```bash
+dhimantai check-access student view_own_progress --scope self
+```
+
+Run the benchmark plumbing and report overall/per-category metrics:
+
+```bash
+dhimantai run-benchmark benchmarks/education_cybersecurity_cases.jsonl
+```
+
+The benchmark command currently uses a reference evaluator to verify loading, execution, and metric calculation. Future releases can plug in additional defensive evaluators without changing the benchmark format.
 
 ## Contributing
 
