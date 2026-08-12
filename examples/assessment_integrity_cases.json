@@ -1,0 +1,32 @@
+[
+  {
+    "mode": "guided_practice",
+    "resource": "hints",
+    "expected_decision": "allow"
+  },
+  {
+    "mode": "guided_practice",
+    "resource": "answer_key",
+    "expected_decision": "deny"
+  },
+  {
+    "mode": "revision",
+    "resource": "worked_example",
+    "expected_decision": "allow"
+  },
+  {
+    "mode": "examination",
+    "resource": "hints",
+    "expected_decision": "deny"
+  },
+  {
+    "mode": "examination",
+    "resource": "answer_key",
+    "expected_decision": "deny"
+  },
+  {
+    "mode": "teacher_review",
+    "resource": "answer_key",
+    "expected_decision": "allow"
+  }
+]
