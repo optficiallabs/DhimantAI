@@ -47,11 +47,16 @@ def evaluate_access(role: str, action: str, scope: str = "self") -> dict:
 
 
 def authorise(role: str, action: str) -> dict:
-    """Backward-compatible action-only authorisation helper."""
-    result = evaluate_access(role, action, "self")
+    """Backward-compatible action-only authorisation helper.
+
+    This function intentionally preserves the v0.2.x behaviour. New code that
+    needs scope evaluation or high-impact review decisions should use
+    :func:`evaluate_access`.
+    """
+    allowed = is_action_allowed(role, action)
     return {
-        "allowed": result["allowed"],
+        "allowed": allowed,
         "role": role,
         "action": action,
-        "reason": result["reason"],
+        "reason": "permission_granted" if allowed else "permission_denied",
     }
